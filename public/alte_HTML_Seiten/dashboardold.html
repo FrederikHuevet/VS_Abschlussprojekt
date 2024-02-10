@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Mission Control</title>
+    <script src="client.js" type="text/javascript"></script>
+
+
+    <style>
+        #myRedCircle {
+            width: 30px;
+            height: 30px;
+            background-color: #FFF;
+            border-style: solid;
+            border-color: #000;
+            border-radius: 50%;
+        }
+
+        #myGreenCircle {
+            width: 30px;
+            height: 30px;
+            background-color: #FFF;
+            border-style: solid;
+            border-color: #000;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<h1>Mission Control</h1>
+    <br>
+<div style="border-style: solid; border-width: thin; border-color: black; width: 350px; height: 45px">
+    <Label>Current Temperature: </Label>
+    <input readonly placeholder="Temperature Value" type="text" id="temperatureValue">
+    <button onClick="getTemperature()">Get</button>
+    <br>
+    <br>
+</div>
+<div style="border-style: solid; border-width: thin; border-color: black; width: 350px; height: 75px">
+    <div id="myRedCircle">
+    </div>
+    <div>
+        <br>
+        <button onClick="turnOnRedLed()">Turn on red LED</button>
+        <button onClick="turnOffRedLed()">Turn off red LED</button>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+<div style="border-style: solid; border-width: thin; border-color: black; width: 350px; height: 75px">
+    <div id="myGreenCircle">
+    </div>
+    <div>
+      <br>
+       <button onClick="turnOnGreenLed()">Turn on green LED</button>
+       <button onClick="turnOffGreenLed()">Turn off green LED</button>
+    </div>
+</div>
+<div id="userManagementDiv" style="display: none">
+    <br><br>
+    <button id="userManagementButton" onclick="userManagement()">User Management</button>
+</div>
+<div>
+    <br><br><br><br>
+    <button onClick="logout()">Logout</button>
+</div>
+<div>
+
+</div>
+
+</body>
+</html>

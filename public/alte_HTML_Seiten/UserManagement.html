@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Benutzerdaten</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/gh/Caligatio/jsSHA/src/sha256.js"></script>
+  <script src="client.js" type="text/javascript"></script>
+</head>
+<body>
+<table id="userdata">
+  <tr>
+    <th>Username</th>
+    <th>Admin</th>
+    <th>Action</th>
+  </tr>
+</table>
+
+<script>
+  fetch('accounts.json')
+          .then(response => response.json())
+          .then(data => {
+            let table = document.getElementById('userdata');
+            data.forEach(item => {
+              let row = table.insertRow();
+              let usernameCell = row.insertCell();
+              let isAdminCell = row.insertCell();
+              let actionCell = row.insertCell();
+
+              let username = item.username;
+              usernameCell.textContent = username;
+
+
+              if (item.admin == "true")
+              {
+                isAdminCell.textContent = "Yes";
+                actionCell.innerHTML = '<button onClick="deleteUser(\'' + username + '\')" disabled>Delete User</button>';
+              }
+              else {
+                isAdminCell.textContent = "No";
+                actionCell.innerHTML = '<button onClick="deleteUser(\'' + username + '\')">Delete User</button>';
+              }
+
+            });
+          })
+          .catch(error => console.error('Fehler:', error));
+</script>
+<br>
+<br>
+<button onClick="backToMissionControl()">Back to Mission Control</button>
+</body>
+</html>
