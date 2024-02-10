@@ -1,31 +1,26 @@
-//wsURI = 'ws://192.168.0.132:8008';
 
-const serverAddress = '192.168.0.132'; //'localhost';
-
-wsURI = 'ws://' + serverAddress + ':8008';
-var connection = new WebSocket(wsURI);
-
-let userHash = "";
-
-connection.addEventListener('open', () => {
-    //connection.send('Hallo vom Client!');
-});
-
+//################################################################################################
+//#                                   SHA256 Hash Funktion                                       #
+//################################################################################################
+//region
 function hash(input) {
     var shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(input);
     var hash = shaObj.getHash("HEX");
     return hash;
 }
-/*
-async function hash(input) {
-    const msgUint8 = new TextEncoder().encode(input);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-}
-*/
+//endregion
+
+//################################################################################################
+//#                                   Websocket Verbindung                                       #
+//################################################################################################
+//region
+
+const serverAddress = '192.168.0.132'; //'localhost';
+wsURI = 'ws://' + serverAddress + ':8008';
+var connection = new WebSocket(wsURI);
+
+
 connection.onopen = async function() {
     console.log('Connected!');
 
@@ -83,15 +78,12 @@ connection.onopen = async function() {
 
 };
 
-// Log errors
 connection.onerror = function(error) {
     console.log('Websocket Error ' + error);
 };
 
-// Log message from the server
 connection.onmessage = function(e) {
 
-    //console.log('Server: ' + e.data);
     let json = JSON.parse(e.data);
 
 
@@ -366,26 +358,23 @@ connection.onmessage = function(e) {
 
 };
 
-connection.onclose = function ()
-{
+connection.onclose = function () {
     console.log('DISCONNECTED');
 };
+//endregion
+
+//################################################################################################
+//#                                Funktionen der HTML Seiten                                    #
+//################################################################################################
+//region
 
 async function deleteUser(username) {
-    console.log(username);
     let userToDeleteHash= await hash(username);
-    console.log(userToDeleteHash);
 
     const ownToken = sessionStorage.getItem("jwtTokenAdmin");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "DELETE_USER_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken,
             userToDeleteHash: userToDeleteHash
@@ -399,7 +388,7 @@ async function login() {
     const userpassword = document.getElementById("userpassword").value;
 
     let passwordhash = await hash(userpassword);
-    userHash = await hash(username+passwordhash);
+    const userHash = await hash(username+passwordhash);
 
     let data = JSON.stringify( {
         "method": "LOGIN_REQUEST",
@@ -423,14 +412,8 @@ function getTemperature() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "GET_TEMPERATURE_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -442,14 +425,8 @@ function getRedLedStatus() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "GET_RED_LED_STATUS_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -461,14 +438,8 @@ function turnOnRedLed() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "TURN_ON_RED_LED_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -480,14 +451,8 @@ function turnOffRedLed() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "TURN_OFF_RED_LED_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -499,14 +464,8 @@ function getGreenLedStatus() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "GET_GREEN_LED_STATUS_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -518,14 +477,8 @@ function turnOnGreenLed() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "TURN_ON_GREEN_LED_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -537,14 +490,8 @@ function turnOffGreenLed() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "TURN_OFF_GREEN_LED_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -556,14 +503,8 @@ function userManagement() {
 
     const ownToken = sessionStorage.getItem("jwtTokenAdmin");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "USER_MANAGEMENT_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
@@ -588,17 +529,12 @@ function backToMissionControl() {
 
     const ownToken = sessionStorage.getItem("jwtTokenUser");
 
-    let headers = new Headers();
-    //headers.append("Authorization", "Bearer " + ownToken);
-
-    console.log(ownToken);
-
     let data = JSON.stringify( {
         method: "BACK_TO_MISSION_CONTROL_REQUEST",
-        //headers: headers,
         data: {
             token: ownToken
         }
     });
     connection.send(data);
 }
+//endregion

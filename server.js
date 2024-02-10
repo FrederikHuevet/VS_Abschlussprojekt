@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //endregion
 
 //################################################################################################
-//#                                      Hash Funktion                                           #
+//#                                   SHA256 Hash Funktion                                       #
 //################################################################################################
 //region
 const { createHash } = require('crypto');
@@ -320,7 +320,6 @@ wss.on('connection', (ws) => {
 
     ws.on('close', () => {
         clients.delete(clientId);
-        console.log(`Client ${clientId} disconnected`);
     });
 
     ws.on('message', (message) => {
