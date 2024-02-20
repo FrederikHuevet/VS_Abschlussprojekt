@@ -63,11 +63,6 @@ client.on('connect', () => {
     client.subscribe('GREEN_LED_ON_RESPONSE');
     client.subscribe('GREEN_LED_OFF_RESPONSE');
     client.subscribe('GET_TEMPERATURE_RESPONSE');
-
-    // Sende initiale Statusanfrage aller Events
-    // client.publish('RED_LED_STATUS_REQUEST', 'true');
-    //client.publish('GREEN_LED_STATUS_REQUEST', 'true');
-    //client.publish('GET_TEMPERATURE_REQUEST', 'true');
 });
 
 client.on('message', (topic, message) => {
