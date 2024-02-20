@@ -24,36 +24,6 @@
     <th>Action</th>
   </tr>
 </table>
-
-<script>
-  fetch('accounts.json')
-          .then(response => response.json())
-          .then(data => {
-            let table = document.getElementById('userdata');
-            data.forEach(item => {
-              let row = table.insertRow();
-              let usernameCell = row.insertCell();
-              let isAdminCell = row.insertCell();
-              let actionCell = row.insertCell();
-
-              let username = item.username;
-              usernameCell.textContent = username;
-
-
-              if (item.admin == "true")
-              {
-                isAdminCell.textContent = "Yes";
-                actionCell.innerHTML = '<button onClick="deleteUser(\'' + username + '\')" disabled>Delete User</button>';
-              }
-              else {
-                isAdminCell.textContent = "No";
-                actionCell.innerHTML = '<button onClick="deleteUser(\'' + username + '\')">Delete User</button>';
-              }
-
-            });
-          })
-          .catch(error => console.error('Fehler:', error));
-</script>
 <br>
 <br>
 <button onClick="backToMissionControl()">Back to Mission Control</button>
