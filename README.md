@@ -2,8 +2,9 @@
 
 Das vorliegende Repository beinhaltet die Projektarbeit für das Modul Verteilte Systeme, welche ebenfalls die benotete Prüfungsleistung darstellt. Das Modul Verteilte Systeme ist ein Anpassungsmodul im Masterstudiengang Informatik: Verteilte und Mobile Anwendungen der Hochschule Osnabrück.
 
-
 Das entwickelte verteilte System besteht primär aus einem NodeJS Websocket Server, einem Mosquitto MQTT Client und einem Arduino Sensor-Aktor-Knoten. Es können sich Clients per Websocket Verbindung mit dem NodeJS Websocketserver verbinden und über diesen einen Arduino Sensor-Aktor-Knoten steuern. Als beispielhafte Sensorik wird ein Temperatursensor verwendet, als Aktorik eine rote und eine grüne LED. Die Kommunikation mit dem Arduino erfolgt über einen Mosquitto MQTT Server als Middleware. Um gewisse Funktionen zu schützen, wurden verschiedene Benutzerrollen eingeführt, die dem Account des Nutzers zugewiesen sind. Die Authentifizierung erfolgt mittels JWT.
+
+<img src='https://github.com/FrederikHuevet/VS_Abschlussprojekt/blob/main/Distributed_System_Topology_XL.png' align: center>
 
 ### Hinweise zur Installation:
 
