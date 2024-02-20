@@ -16,7 +16,7 @@ function hash(input) {
 //################################################################################################
 //region
 
-const serverAddress = '192.168.0.132'; //'localhost';
+const serverAddress = '192.168.0.132';//'172.22.111.100'; //
 wsURI = 'ws://' + serverAddress + ':8008';
 var connection = new WebSocket(wsURI);
 

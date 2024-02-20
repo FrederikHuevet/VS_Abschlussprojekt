@@ -39,7 +39,7 @@ function hash(string) {
 //region
 const mqtt = require('mqtt');
 
-const client = mqtt.connect('ws://localhost:8883', {
+const client = mqtt.connect('ws://0.0.0.0:8883', {
     clientId: '2'});
 
 client.setMaxListeners(20);
@@ -302,7 +302,7 @@ client.on('error', (error) => {
 //################################################################################################
 //region
 const WebSocket = require('ws');
-const serverAddress = '192.168.0.132'; //'localhost';
+const serverAddress = '192.168.0.132';//'172.22.111.100'; //'localhost';
 const port = 8008;
 
 const server = app.listen(port, () => {
@@ -315,7 +315,8 @@ const clients = new Map();
 
 wss.on('connection', (ws) => {
 
-    const clientId = Date.now().toString(); // Generieren Sie eine eindeutige Client-ID
+    // Generiere und speichere eindeutige Client-ID
+    const clientId = Date.now().toString();
     clients.set(clientId, ws);
 
     ws.on('close', () => {
@@ -332,7 +333,7 @@ wss.on('connection', (ws) => {
 
             if (data["method"] == "LOGIN_REQUEST") {
 
-                // Lese die JSON-Datei synchron
+                // Lese JSON-Datei synchron
                 let rawdata = fs.readFileSync('public/accounts.json');
 
                 // Parse die Daten in ein JavaScript-Objekt
@@ -340,7 +341,6 @@ wss.on('connection', (ws) => {
 
                 let accountFound = false;
                 let isAdmin = "";
-                let isLoggedIn = false;
 
                 // Durchlaufe jedes Objekt
                 for(let objekt of objekte) {
@@ -351,7 +351,6 @@ wss.on('connection', (ws) => {
                     {
                         accountFound = true;
                         isAdmin = objekt["admin"];
-                        isLoggedIn = objekt["loggedIn"];
                     }
                 }
 
@@ -402,8 +401,6 @@ wss.on('connection', (ws) => {
             else if (data["method"] == "USER_MANAGEMENT_REQUEST")
             {
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                   // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKeyAdmin);
 
                     const response = JSON.stringify({
@@ -431,16 +428,14 @@ wss.on('connection', (ws) => {
             else if (data["method"] == "GET_ACCOUNT_INFORMATION_REQUEST")
             {
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKeyAdmin);
 
-                    // Lese die JSON-Datei synchron
+                    // Lese die JSON-Datei
                     let rawdata = fs.readFileSync('public/accounts.json');
                     // Parse die Daten in ein JavaScript-Objekt
                     let objekte = JSON.parse(rawdata);
 
-                    // Erstelle anzuzeigende Accountinformationen
+                    // Erstelle anzuzeigende Accountinformationen in einer map
                     let accountsToDisplay = JSON.stringify(
                         objekte.map(objekt => ({
                             username: objekt["username"],
@@ -476,8 +471,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -502,8 +495,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -526,8 +517,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -550,8 +539,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -576,8 +563,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -600,8 +585,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -624,8 +607,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
 
                     //Sende Request an MQTT Server
@@ -648,8 +629,6 @@ wss.on('connection', (ws) => {
             {
 
                 try {
-                    //let token = data.headers["Authorization"].split(" ")[1];
-                    // console.log(token);
                     const decoded = jwt.verify(data["data"]["token"], secretKey);
                     const response = {
                         method: 'BACK_TO_MISSION_CONTROL_RESPONSE',
