@@ -255,11 +255,17 @@ client.on('message', (topic, message) => {
     {
         if (clientMessage != "INVALID")
         {
+            // Temperatur aus der Nachricht auslesen
+            const messageString = message.toString(); // Nachricht in einen String umwandeln
+            const temperatureIndex = messageString.lastIndexOf(':') + 1; // Finde den Index des ":" vor der Temperatur
+            const temperature = messageString.substring(temperatureIndex); // Extrahiere den Teil der Nachricht, der die Temperatur enthält
+
             const response = {
                 method: 'GET_TEMPERATURE_RESPONSE',
                 data: {
                     wasSuccessful: true,
-                    temperature: 24//message.toString()
+                    temperature: temperature
+                    //temperature: 24  // Fester Wert für Simulation mit dem mqttTestClient.js
                 }
             };
             if (clients.has(clientId)) {
@@ -297,7 +303,7 @@ client.on('error', (error) => {
 //################################################################################################
 //region
 const WebSocket = require('ws');
-const serverAddress = '192.168.0.132';//'172.22.111.100'; //'localhost';
+const serverAddress = '192.168.178.56'; //192.168.0.132';//'172.22.111.100'; //'localhost';
 const port = 8008;
 
 const server = app.listen(port, () => {
