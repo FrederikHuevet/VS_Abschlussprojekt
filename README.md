@@ -4,7 +4,7 @@ Das vorliegende Repository beinhaltet die Projektarbeit für das Modul Verteilte
 
 Das entwickelte verteilte System besteht primär aus einem NodeJS Websocket Server, einem Mosquitto MQTT Client und einem Arduino Sensor-Aktor-Knoten. Es können sich Clients per Websocket Verbindung mit dem NodeJS Websocketserver verbinden und über diesen einen Arduino Sensor-Aktor-Knoten steuern. Als beispielhafte Sensorik wird ein Temperatursensor verwendet, als Aktorik eine rote und eine grüne LED. Die Kommunikation mit dem Arduino erfolgt über einen Mosquitto MQTT Server als Middleware. Um gewisse Funktionen zu schützen, wurden verschiedene Benutzerrollen eingeführt, die dem Account des Nutzers zugewiesen sind. Die Authentifizierung erfolgt mittels JWT.
 
-<img src='https://github.com/FrederikHuevet/VS_Abschlussprojekt/blob/main/Distributed_System_Topology_XL.png' align: center>
+<img src='https://github.com/FrederikHuevet/VS_Abschlussprojekt/blob/cedac0f43abf1fcd5608d28983308b629bb55b5b/Distributed_System_XL.png' align: center>
 
 ### Hinweise zur Installation:
 
